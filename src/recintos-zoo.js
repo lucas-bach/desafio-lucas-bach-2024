@@ -22,23 +22,28 @@ class RecintosZoo {
 
 
     analisaRecintos(animal, quantidade) {
-        if (!this.animais[animal]) {
-            return { erro: "Animal inválido" };
+        if(!this.animais[animal.toUpperCase()]) {
+            return {
+                erro: "Animal inválido",
+                recintosViaveis: []
+            }
         }
 
+        if(quantidade <= 0 || !Number.isInteger(quantidade)) {
+            return {
+                erro: "Quantidade inválida",
+                recintosViaveis: []
+            }
+        }
+
+        const animalData = this.animais[animal.toUpperCase()];
+        const biomaAnimal = animalData.bioma;
+        const tamanhioAnimal = animalData.tamanho;
+        const recintosViaveis = [];
+
+        
 
 
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-export { RecintosZoo as RecintosZoo };
+}
