@@ -1,6 +1,5 @@
 class RecintosZoo {
     constructor() {
-        
         this.recintos = [
             { numero: 1, bioma: 'savana', tamanhoTotal: 10, animais: { macaco: 3 } },
             { numero: 2, bioma: 'floresta', tamanhoTotal: 5, animais: {} },
@@ -9,7 +8,6 @@ class RecintosZoo {
             { numero: 5, bioma: 'savana', tamanhoTotal: 9, animais: { leão: 1 } }
         ];
 
-        
         this.animais = {
             LEAO: { tamanho: 3, bioma: 'savana' },
             LEOPARDO: { tamanho: 2, bioma: 'savana' },
@@ -21,7 +19,6 @@ class RecintosZoo {
     }
 
     analisaRecintos(animal, quantidade) {
-        
         if (!this.animais[animal.toUpperCase()]) {
             return { erro: "Animal inválido", recintosViaveis: [] };
         }
@@ -50,7 +47,6 @@ class RecintosZoo {
         return { erro: null, recintosViaveis: recintosViaveis.sort((a, b) => a.localeCompare(b)) };
     }
 
-    
     podeAcomodar(animal, biomaRecinto, tamanhoDisponivel, tamanhoAnimal, quantidade, animaisNoRecinto) {
         if (biomaRecinto.includes('e') && !this.biomaPodeAcomodar(animal)) {
             return false;
@@ -69,18 +65,21 @@ class RecintosZoo {
         return tamanhoDisponivel >= totalEspacoOcupado;
     }
 
-    
     biomaPodeAcomodar(animal) {
         const biomasAnimal = this.animais[animal.toUpperCase()].bioma.split(' ou ');
         return biomasAnimal.some(bioma => this.recintos.some(r => r.bioma === bioma));
     }
 
-    
     getTamanhoOcupado(animaisNoRecinto, animais) {
-        return Object.entries(animaisNoRecinto).reduce((total, [animal, quantidade]) => total + (animais[animal.toUpperCase()].tamanho * quantidade), 0);
+        return Object.entries(animaisNoRecinto).reduce((total, [animal, quantidade]) => {
+            const animalData = animais[animal.toUpperCase()];
+            if (animalData) {
+                return total + (animalData.tamanho * quantidade);
+            }
+            return total; // Se animalData não estiver definido, apenas continue
+        }, 0);
     }
 
-    
     getTotalEspacoOcupado(animaisNoRecinto, animais) {
         return Object.entries(animaisNoRecinto).reduce((total, [animal, quantidade]) => total + (animais[animal.toUpperCase()].tamanho * quantidade), 0);
     }
